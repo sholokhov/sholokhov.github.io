@@ -7,6 +7,7 @@ enableEmoji = true
 googleAnalytics = ""
 enableRobotsTXT = true
 copyright = "&copy; 2024, Artem Sholokhov"
+publishDir = "docs"
 
 [menu]
   [[menu.main]]
