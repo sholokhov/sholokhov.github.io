@@ -1,0 +1,64 @@
+baseURL = "https://sholokhov.pro"
+title = "Artem Sholokhov"
+languageCode = "en-us"
+theme = "devise"
+relativeURLs = true
+enableEmoji = true
+googleAnalytics = ""
+enableRobotsTXT = true
+copyright = "&copy; 2024, Artem Sholokhov"
+
+[menu]
+  [[menu.main]]
+    identifier = "about"
+    name = "About"
+    title = "About"
+    url = "/"
+    weight = -110
+#  [[menu.main]]
+#    identifier = "posts"
+#    name = "Posts"
+#    title = "Posts"
+#    url = "/posts/"
+#    weight = -100
+#  [[menu.main]]
+#    identifier = "categories"
+#    name = "Categories"
+#    title = "Categories"
+#    url = "/categories/"
+#    weight = -90
+[[menu.main]]
+    identifier = "cv"
+    name = "CV"
+    title = "CV"
+    url = "https://www.linkedin.com/in/artem-sholokhov-5880206a/"
+    weight = -80
+
+[params]
+  description = ""
+  header_title = "Artem Sholokhov"
+  header_subtitle = "SWE and Architect @ XITE | 🇳🇱 Amsterdam"
+  home_image = "/images/me.jpeg"
+  recent_posts = 5
+  # Main sections to include in recent posts
+  mainSections = ["posts", "post", "blog"]
+  [params.style]
+    backgroundColor = "#f8f9fa"
+    homeImageBorderColor = "#ffffff"
+    fontFamilyBase = "Helvetica Neue"
+    fontColor = "#212529"
+  [[params.social]]
+    fa_icon = "fab fa-github fa-1x"
+    href = "https://github.com/sholokhov"
+  [[params.social]]
+    fa_icon = "fab fa-linkedin-in fa-1x"
+    href = "https://www.linkedin.com/in/artem-sholokhov-5880206a/"
+  [[params.social]]
+    fa_icon = "fab fa-telegram fa-1x"
+    href = "https://t.me/sholokhov"
+  [[params.social]]
+    fa_icon = "fab fa-instagram fa-1x"
+    href = "https://www.instagram.com/sholokhov_a/"
+  [[params.social]]
+    fa_icon = "fas fa-at fa-1x"
+    href = "mailto:sholokhov.pro.k8bx9@passmail.net"
