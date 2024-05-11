@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Artem Sholokhov</title>
+    <link>https://sholokhov.pro/tags/</link>
+    <description>Recent content in Tags on Artem Sholokhov</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2024, Artem Sholokhov</copyright>
+    <atom:link href="https://sholokhov.pro/tags/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>
