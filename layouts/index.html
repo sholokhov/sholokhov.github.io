@@ -1,0 +1,22 @@
+{{ define "main" }}
+<div class="content-area">
+  <h2>{{ .Title }}</h2>
+  {{ with .Content }}<div class="page-content">{{ . }}</div>{{ end }}
+
+  {{ $posts := where .Site.RegularPages "Section" "blog" }}
+  {{ if $posts }}
+  <div class="recent-posts">
+    <h3>Recent Posts</h3>
+    <ul class="post-list">
+      {{ range first 5 $posts }}
+      <li>
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+      </li>
+      {{ end }}
+    </ul>
+    <a href="{{ "blog/" | relURL }}" class="see-all">All posts &rarr;</a>
+  </div>
+  {{ end }}
+</div>
+{{ end }}

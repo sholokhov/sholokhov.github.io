@@ -5,7 +5,11 @@ hugo.darwin
 hugo.linux
 
 /.hugo_build.lock
+/public/
+/docs/
 
 /resources/_gen/
 /assets/jsconfig.json
 hugo_stats.json
+
+/_drafts

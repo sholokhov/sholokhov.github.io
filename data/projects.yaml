@@ -1,0 +1,11 @@
+- name: "DataBridge Tech"
+  description: "Data quality validation platform with automated profiling, real-time monitoring, and CI/CD integration for reliable data, AI and ML pipelines"
+  url: "https://databridge.tech/"
+  icon: "https://databridge.tech/assets/logo.svg"
+  tags: ["saas"]
+
+- name: "CDP Kirov"
+  description: "Website and student diary for a pre-university education center in Kirov, Russia - built and maintained as a volunteer project"
+  url: "https://cdp-kirov.ru/"
+  icon: "https://cdp-kirov.ru/images/logo-square.png"
+  tags: ["volunteer"]

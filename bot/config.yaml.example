@@ -1,0 +1,52 @@
+# Photo Bot Configuration
+# Secrets can be overridden via environment variables (see .env.example)
+
+telegram:
+  token: ""                    # or TELEGRAM_TOKEN env var
+  allowed_user_id: 0           # or TELEGRAM_ALLOWED_USER_ID env var
+
+b2:
+  key_id: ""                   # or B2_KEY_ID env var
+  app_key: ""                  # or B2_APP_KEY env var
+  bucket: "sholokhov-photos"
+  endpoint: "s3.us-west-004.backblazeb2.com"
+  public_url: "https://f004.backblazeb2.com/file/sholokhov-photos"
+
+github:
+  token: ""                    # or GITHUB_TOKEN env var
+  repo: "sholokhov/sholokhov.github.io"
+  file_path: "data/photos.json"
+  branch: "main"
+
+tags:
+  locations:
+    - "Austria"
+    - "Netherlands"
+    - "Finland"
+    - "Germany"
+    - "Belgium"
+    - "Italy"
+    - "Denmark"
+    - "Spain"
+    - "USA"
+    - "Luxembourg"
+    - "Norway"
+    - "Portugal"
+    - "Iceland"
+    - "France"
+    - "UAE"
+    - "Russia"
+    - "Greece"
+    - "Maldives"
+    - "Switzerland"
+    - "Japan"
+    - "UK"
+    - "South Korea"
+  cameras:
+    - Sony A7IV
+    - Ricoh GR3
+    - iPhone Air
+
+thumbnail:
+  width: 600
+  quality: 85

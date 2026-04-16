@@ -1,0 +1,30 @@
+{{ define "main" }}
+<article class="content-area">
+  <h2>{{ .Title }}</h2>
+  {{ with .Params.subtitle }}<p class="site-subtitle">{{ . }}</p>{{ end }}
+  <div class="post-meta">
+    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+    &middot;
+    {{ math.Round (div (countwords .Content) 200.0) }} min read
+    {{ with .Params.tags }}
+    <div class="post-tags">
+      {{ range . }}<a href="{{ "tags/" | relURL }}{{ . | urlize }}/" class="tag">{{ . }}</a>{{ end }}
+    </div>
+    {{ end }}
+  </div>
+
+  <div class="page-content">
+    {{ .Content }}
+  </div>
+
+  <hr>
+  <div class="post-nav">
+    {{ with .PrevInSection }}
+    <a href="{{ .RelPermalink }}">&larr; {{ .Title }}</a>
+    {{ end }}
+    {{ with .NextInSection }}
+    <a href="{{ .RelPermalink }}">{{ .Title }} &rarr;</a>
+    {{ end }}
+  </div>
+</article>
+{{ end }}

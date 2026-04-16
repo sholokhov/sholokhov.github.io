@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="{{ .Site.Language.Locale | default "en" }}">
+{{- partial "head.html" . -}}
+<body>
+  <div class="site-wrapper">
+    {{- partial "header.html" . -}}
+    <main class="container">
+      {{- block "main" . }}{{- end }}
+    </main>
+    {{- partial "footer.html" . -}}
+  </div>
+  <script>
+    (function() {
+      var toggle = document.getElementById('theme-toggle');
+      if (!toggle) return;
+      toggle.addEventListener('click', function() {
+        var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        if (isDark) {
+          document.documentElement.removeAttribute('data-theme');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          localStorage.setItem('theme', 'dark');
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

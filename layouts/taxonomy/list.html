@@ -1,0 +1,28 @@
+{{ define "main" }}
+<div class="content-area">
+  {{ if eq .Title "Tags" }}
+    <h2>All Tags</h2>
+    <div class="tag-cloud">
+      {{ range .Pages }}
+        <a href="{{ .RelPermalink }}" class="tag">{{ .Title }} ({{ len .Pages }})</a>
+      {{ end }}
+    </div>
+  {{ else }}
+    <div class="tag-page-header">
+      <h2>Tagged:</h2>
+      <span class="tag">{{ .Title }}</span>
+    </div>
+    <ul class="blog-list">
+      {{ range .Pages.ByDate.Reverse }}
+      <li>
+        <div class="post-meta">
+          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+        </div>
+        <h3 class="post-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+        {{ with .Params.summary }}<p class="post-summary">{{ . }}</p>{{ end }}
+      </li>
+      {{ end }}
+    </ul>
+  {{ end }}
+</div>
+{{ end }}

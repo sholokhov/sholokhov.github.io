@@ -1,0 +1,240 @@
+{{ define "main" }}
+<div class="content-area">
+  <h2>{{ .Title }}</h2>
+
+  {{ $photos := sort (hugo.Data.photos) "date" "desc" }}
+  {{ if $photos }}
+
+  {{/* Collect unique tags */}}
+  {{ $locations := slice }}
+  {{ $cameras := slice }}
+  {{ range $photos }}
+    {{ if .location }}
+      {{ $locations = $locations | append .location }}
+    {{ end }}
+    {{ if .camera }}
+      {{ $cameras = $cameras | append .camera }}
+    {{ end }}
+  {{ end }}
+  {{ $locations = $locations | uniq }}
+  {{ $cameras = $cameras | uniq }}
+
+  {{/* Tag filter bar */}}
+  <div class="photo-filters">
+    {{ if $locations }}
+    <div class="filter-group">
+      <span class="filter-label">Location</span>
+      {{ range $locations }}
+      <button class="tag filter-tag" data-filter="location" data-value="{{ . }}">{{ . }}</button>
+      {{ end }}
+    </div>
+    {{ end }}
+    {{ if $cameras }}
+    <div class="filter-group">
+      <span class="filter-label">Camera</span>
+      {{ range $cameras }}
+      <button class="tag filter-tag" data-filter="camera" data-value="{{ . }}">{{ . }}</button>
+      {{ end }}
+    </div>
+    {{ end }}
+  </div>
+
+  {{/* Photo grid */}}
+  <div class="photo-grid" id="photo-grid">
+    {{ range $photos }}
+    <div class="photo-item" data-id="{{ .id }}" data-location="{{ .location }}" data-camera="{{ .camera }}">
+      <img
+        src="{{ .thumb }}"
+        alt="{{ .caption | default "" }}"
+        loading="lazy"
+        data-full="{{ .url }}"
+        data-caption="{{ .caption }}"
+        data-location="{{ .location }}"
+        data-camera="{{ .camera }}"
+        data-date="{{ .date }}"
+        data-id="{{ .id }}"
+      >
+    </div>
+    {{ end }}
+  </div>
+
+  {{/* Lightbox overlay */}}
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-backdrop"></div>
+    <button class="lightbox-close" aria-label="Close">&times;</button>
+    <button class="lightbox-prev" aria-label="Previous">&lsaquo;</button>
+    <button class="lightbox-next" aria-label="Next">&rsaquo;</button>
+    <div class="lightbox-content">
+      <img class="lightbox-img" id="lightbox-img" src="" alt="">
+      <div class="lightbox-meta" id="lightbox-meta"></div>
+    </div>
+  </div>
+
+  {{ else }}
+  <div class="photo-empty">
+    <p>photos coming soon</p>
+  </div>
+  {{ end }}
+
+  {{ with .Site.Params.instagram }}
+  <div class="instagram-link">
+    <a href="{{ . }}" target="_blank" rel="noopener">
+      <i class="fab fa-instagram"></i> Follow me on Instagram
+    </a>
+  </div>
+  {{ end }}
+</div>
+
+<script>
+(function() {
+  const grid = document.getElementById('photo-grid');
+  if (!grid) return;
+
+  const items = Array.from(grid.querySelectorAll('.photo-item'));
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxMeta = document.getElementById('lightbox-meta');
+  const filterTags = document.querySelectorAll('.filter-tag');
+  const activeFilters = { location: new Set(), camera: new Set() };
+  let currentIndex = -1;
+
+  // --- Filtering ---
+  function getVisibleItems() {
+    return items.filter(item => item.style.display !== 'none');
+  }
+
+  function applyFilters() {
+    const hasLocation = activeFilters.location.size > 0;
+    const hasCamera = activeFilters.camera.size > 0;
+
+    items.forEach(item => {
+      const loc = item.dataset.location;
+      const cam = item.dataset.camera;
+      const matchLoc = !hasLocation || activeFilters.location.has(loc);
+      const matchCam = !hasCamera || activeFilters.camera.has(cam);
+      item.style.display = (matchLoc && matchCam) ? '' : 'none';
+    });
+  }
+
+  filterTags.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const type = btn.dataset.filter;
+      const value = btn.dataset.value;
+      if (activeFilters[type].has(value)) {
+        activeFilters[type].delete(value);
+        btn.classList.remove('active');
+      } else {
+        activeFilters[type].add(value);
+        btn.classList.add('active');
+      }
+      applyFilters();
+    });
+  });
+
+  // --- Lightbox ---
+  function openLightbox(index) {
+    const visible = getVisibleItems();
+    if (index < 0 || index >= visible.length) return;
+    currentIndex = index;
+    const img = visible[index].querySelector('img');
+    const src = img.dataset.full;
+    const caption = img.dataset.caption;
+    const location = img.dataset.location;
+    const camera = img.dataset.camera;
+    const date = img.dataset.date;
+    const id = img.dataset.id;
+
+    lightboxImg.src = src;
+    lightboxImg.alt = caption || '';
+
+    lightboxMeta.textContent = '';
+    if (caption) {
+      const p = document.createElement('p');
+      p.className = 'lightbox-caption';
+      p.textContent = caption;
+      lightboxMeta.appendChild(p);
+    }
+    const details = [];
+    if (location) details.push({ icon: 'fas fa-map-marker-alt', text: location });
+    if (camera) details.push({ icon: 'fas fa-camera', text: camera });
+    if (date) details.push({ icon: 'far fa-calendar', text: date });
+    if (details.length) {
+      const p = document.createElement('p');
+      p.className = 'lightbox-details';
+      details.forEach((d, i) => {
+        if (i > 0) {
+          const sep = document.createElement('span');
+          sep.className = 'lightbox-sep';
+          sep.innerHTML = '&middot;';
+          p.appendChild(sep);
+        }
+        const icon = document.createElement('i');
+        icon.className = d.icon;
+        p.appendChild(icon);
+        p.appendChild(document.createTextNode(' ' + d.text));
+      });
+      lightboxMeta.appendChild(p);
+    }
+
+    lightbox.classList.add('open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    history.replaceState(null, '', '#photo-' + id);
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    lightboxImg.src = '';
+    currentIndex = -1;
+    history.replaceState(null, '', window.location.pathname);
+  }
+
+  function navigate(dir) {
+    const visible = getVisibleItems();
+    const next = currentIndex + dir;
+    if (next >= 0 && next < visible.length) {
+      openLightbox(next);
+    }
+  }
+
+  // Click on photo
+  items.forEach(item => {
+    item.addEventListener('click', () => {
+      const visible = getVisibleItems();
+      const idx = visible.indexOf(item);
+      if (idx !== -1) openLightbox(idx);
+    });
+  });
+
+  // Close
+  lightbox.querySelector('.lightbox-backdrop').addEventListener('click', closeLightbox);
+  lightbox.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+
+  // Nav
+  lightbox.querySelector('.lightbox-prev').addEventListener('click', () => navigate(-1));
+  lightbox.querySelector('.lightbox-next').addEventListener('click', () => navigate(1));
+
+  // Keyboard
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') navigate(-1);
+    if (e.key === 'ArrowRight') navigate(1);
+  });
+
+  // Deep link: open photo from URL hash
+  function checkHash() {
+    const hash = window.location.hash;
+    if (!hash.startsWith('#photo-')) return;
+    const id = hash.slice(7);
+    const visible = getVisibleItems();
+    const idx = visible.findIndex(item => item.dataset.id === id);
+    if (idx !== -1) openLightbox(idx);
+  }
+  checkHash();
+  window.addEventListener('hashchange', checkHash);
+})();
+</script>
+{{ end }}

@@ -1,0 +1,20 @@
+{{ define "main" }}
+<div class="content-area">
+  <h2>{{ .Title }}</h2>
+  {{ with .Content }}<div class="section-intro">{{ . }}</div>{{ end }}
+
+  {{ range hugo.Data.links }}
+  <div class="links-section">
+    <h3>{{ .category }}</h3>
+    <ul class="link-list">
+      {{ range .items }}
+      <li>
+        <a href="{{ .url }}" target="_blank" rel="noopener" class="link-title">{{ .title }}</a>
+        {{ with .description }}<span class="link-desc">{{ . }}</span>{{ end }}
+      </li>
+      {{ end }}
+    </ul>
+  </div>
+  {{ end }}
+</div>
+{{ end }}

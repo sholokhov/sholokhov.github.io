@@ -1,0 +1,44 @@
+<header class="site-header">
+  <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+    <i class="fas fa-moon"></i>
+    <i class="fas fa-sun"></i>
+  </button>
+  <div class="container header-inner">
+    {{ with .Site.Params.home_image }}
+    <div class="header-image">
+      <a href="{{ "/" | relURL }}">
+        <img src="{{ . | relURL }}" alt="{{ $.Site.Params.header_title }}" class="avatar">
+      </a>
+    </div>
+    {{ end }}
+    <div class="header-info">
+      <h1 class="site-title">
+        <a href="{{ "/" | relURL }}">{{ .Site.Params.header_title | default .Site.Title }}</a>
+      </h1>
+      <p class="site-subtitle">{{ .Site.Params.header_subtitle }}</p>
+      <nav class="site-nav">
+        {{ $currentPage := . }}
+        {{ range .Site.Menus.main }}
+          {{ if .Params.separator }}<span class="nav-sep">&middot;</span>{{ end }}
+          <a href="{{ .URL | relURL }}"
+             class="nav-link{{ if $currentPage.IsMenuCurrent "main" . }} active{{ end }}{{ if $currentPage.HasMenuCurrent "main" . }} active{{ end }}"
+          >{{ .Name }}</a>
+        {{ end }}
+      </nav>
+      <div class="social-links">
+        {{ range .Site.Params.social }}
+          <a href="{{ .href }}" target="_blank" rel="noopener" title="{{ .label }}">
+            {{ if eq .icon "github" }}<i class="fab fa-github"></i>
+            {{ else if eq .icon "linkedin" }}<i class="fab fa-linkedin-in"></i>
+            {{ else if eq .icon "telegram" }}<i class="fab fa-telegram"></i>
+            {{ else if eq .icon "instagram" }}<i class="fab fa-instagram"></i>
+            {{ else if eq .icon "email" }}<i class="fas fa-at"></i>
+            {{ else }}<i class="fas fa-link"></i>
+            {{ end }}
+          </a>
+        {{ end }}
+      </div>
+    </div>
+  </div>
+  <hr class="header-divider">
+</header>

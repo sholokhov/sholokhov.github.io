@@ -1,0 +1,41 @@
+{{ define "main" }}
+<div class="content-area">
+  <h2>{{ .Title }}</h2>
+
+  {{/* Collect all tags from blog posts */}}
+  {{ $allTags := slice }}
+  {{ range where .Site.RegularPages "Section" "blog" }}
+    {{ range .Params.tags }}
+      {{ $allTags = $allTags | append . }}
+    {{ end }}
+  {{ end }}
+  {{ $allTags = $allTags | uniq | sort }}
+
+  {{ if $allTags }}
+  <div class="tag-filter">
+    {{ range $allTags }}
+      <a href="{{ "tags/" | relURL }}{{ . | urlize }}/" class="tag">{{ . }}</a>
+    {{ end }}
+  </div>
+  {{ end }}
+
+  <ul class="blog-list">
+    {{ range .Pages.ByDate.Reverse }}
+    <li>
+      <div class="post-meta">
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+        &middot;
+        {{ math.Round (div (countwords .Content) 200.0) }} min read
+      </div>
+      <h3 class="post-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+      {{ with .Params.summary }}<p class="post-summary">{{ . }}</p>{{ end }}
+      {{ with .Params.tags }}
+      <div class="post-tags">
+        {{ range . }}<a href="{{ "tags/" | relURL }}{{ . | urlize }}/" class="tag">{{ . }}</a>{{ end }}
+      </div>
+      {{ end }}
+    </li>
+    {{ end }}
+  </ul>
+</div>
+{{ end }}

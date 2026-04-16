@@ -1,65 +1,80 @@
 baseURL = "https://sholokhov.pro"
 title = "Artem Sholokhov"
-languageCode = "en-us"
-theme = "devise"
+locale = "en-us"
 relativeURLs = true
 enableEmoji = true
-googleAnalytics = ""
 enableRobotsTXT = true
-copyright = "&copy; 2024, Artem Sholokhov"
-publishDir = "docs"
+copyright = "&copy; 2026, Artem Sholokhov"
+[taxonomies]
+  tag = "tags"
+
+[markup]
+  [markup.highlight]
+    style = "github"
+    lineNos = false
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
 
 [menu]
   [[menu.main]]
     identifier = "about"
     name = "About"
-    title = "About"
     url = "/"
-    weight = -110
-#  [[menu.main]]
-#    identifier = "posts"
-#    name = "Posts"
-#    title = "Posts"
-#    url = "/posts/"
-#    weight = -100
-#  [[menu.main]]
-#    identifier = "categories"
-#    name = "Categories"
-#    title = "Categories"
-#    url = "/categories/"
-#    weight = -90
-[[menu.main]]
-    identifier = "cv"
-    name = "CV"
-    title = "CV"
-    url = "https://www.linkedin.com/in/artem-sholokhov-5880206a/"
-    weight = -80
+    weight = 10
+  [[menu.main]]
+    identifier = "blog"
+    name = "Blog"
+    url = "/blog/"
+    weight = 20
+  [[menu.main]]
+    identifier = "projects"
+    name = "Projects"
+    url = "/projects/"
+    weight = 50
+  [[menu.main]]
+    identifier = "talks"
+    name = "Talks"
+    url = "/talks/"
+    weight = 65
+  [[menu.main]]
+    identifier = "photos"
+    name = "Photos"
+    url = "/photos/"
+    weight = 70
+  [[menu.main]]
+    identifier = "hire-me"
+    name = "Hire Me"
+    url = "/hire-me/"
+    weight = 100
+    [menu.main.params]
+      separator = true
 
 [params]
-  description = ""
+  description = "Artem Sholokhov - Software Engineer and Architect, Amsterdam"
   header_title = "Artem Sholokhov"
-  header_subtitle = "SWE and Architect @ XITE | 🇳🇱 Amsterdam"
+  header_subtitle = "Software Engineer and Architect | 🇳🇱 Amsterdam"
   home_image = "/images/me.jpeg"
-  recent_posts = 5
-  # Main sections to include in recent posts
-  mainSections = ["posts", "post", "blog"]
-  [params.style]
-    backgroundColor = "#f8f9fa"
-    homeImageBorderColor = "#ffffff"
-    fontFamilyBase = "Helvetica Neue"
-    fontColor = "#212529"
+  mainSections = ["blog"]
+  caseStudyTag = "case-study"
+  instagram = "https://www.instagram.com/sholokhov_a/"
   [[params.social]]
-    fa_icon = "fab fa-github fa-1x"
+    icon = "github"
     href = "https://github.com/sholokhov"
+    label = "GitHub"
   [[params.social]]
-    fa_icon = "fab fa-linkedin-in fa-1x"
+    icon = "linkedin"
     href = "https://www.linkedin.com/in/artem-sholokhov-5880206a/"
+    label = "LinkedIn"
   [[params.social]]
-    fa_icon = "fab fa-telegram fa-1x"
+    icon = "telegram"
     href = "https://t.me/sholokhov"
+    label = "Telegram"
   [[params.social]]
-    fa_icon = "fab fa-instagram fa-1x"
+    icon = "instagram"
     href = "https://www.instagram.com/sholokhov_a/"
+    label = "Instagram"
   [[params.social]]
-    fa_icon = "fas fa-at fa-1x"
+    icon = "email"
     href = "mailto:sholokhov.pro.k8bx9@passmail.net"
+    label = "Email"

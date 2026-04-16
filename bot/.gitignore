@@ -1,0 +1,5 @@
+.env
+config.yaml
+bot
+session.json
+.hugo_build.lock

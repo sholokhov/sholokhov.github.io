@@ -1,0 +1,31 @@
+{{ define "main" }}
+<div class="content-area">
+  <h2>{{ .Title }}</h2>
+  {{ with .Content }}<div class="section-intro">{{ . }}</div>{{ end }}
+
+  {{ $caseStudyTag := .Site.Params.caseStudyTag | default "case-study" }}
+  {{ $posts := where .Site.RegularPages "Section" "blog" }}
+  {{ $filtered := where $posts "Params.tags" "intersect" (slice $caseStudyTag) }}
+
+  {{ if $filtered }}
+  <ul class="case-study-list">
+    {{ range $filtered.ByDate.Reverse }}
+    <li>
+      <div class="post-meta">
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+      </div>
+      <h3 class="post-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+      {{ with .Params.summary }}<p class="post-summary">{{ . }}</p>{{ end }}
+      {{ with .Params.tags }}
+      <div class="post-tags">
+        {{ range . }}<a href="{{ "tags/" | relURL }}{{ . | urlize }}/" class="tag">{{ . }}</a>{{ end }}
+      </div>
+      {{ end }}
+    </li>
+    {{ end }}
+  </ul>
+  {{ else }}
+  <p class="text-muted">Case studies coming soon.</p>
+  {{ end }}
+</div>
+{{ end }}
