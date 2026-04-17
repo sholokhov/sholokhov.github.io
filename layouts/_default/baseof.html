@@ -11,6 +11,15 @@
   </div>
   <script>
     (function() {
+      var mq = window.matchMedia('(prefers-color-scheme: dark)');
+      mq.addEventListener('change', function(e) {
+        if (localStorage.getItem('theme')) return;
+        if (e.matches) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+        }
+      });
       var toggle = document.getElementById('theme-toggle');
       if (!toggle) return;
       toggle.addEventListener('click', function() {
