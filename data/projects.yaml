@@ -1,7 +1,7 @@
 - name: "DataBridge Tech"
   description: "Data quality validation platform with automated profiling, real-time monitoring, and CI/CD integration for reliable data, AI and ML pipelines"
   url: "https://databridge.tech/"
-  icon: "https://databridge.tech/assets/logo.svg"
+  icon: "https://databridge.tech/img/logo-w.svg"
   tags: ["saas"]
 
 - name: "CDP Kirov"
